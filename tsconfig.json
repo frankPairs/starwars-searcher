@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/",
+    "noImplicitAny": true,
+    "module": "esnext",
+    "target": "ES2015",
+    "jsx": "react-jsx",
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types", "./src/typedefs"],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "lib": ["dom", "esnext"],
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["node_modules", "webpack.config.js", "configs"]
+}
