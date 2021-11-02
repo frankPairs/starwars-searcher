@@ -5,7 +5,7 @@ With this application you can search any StarWars character and see some informa
 
 ## Scripts
 
-```
+
 
 Run development environment:
 
@@ -27,4 +27,5 @@ npm run test
 
 ## Authors
 
-- [Frank Parejo](https://github.com/frankPairs)
+
+[Frank Parejo](https://github.com/frankPairs)
