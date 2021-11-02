@@ -24,16 +24,20 @@
   "keywords": [
     "react",
     "typescript",
-    "boilerplate",
     "webpack",
-    "css-modules",
     "jest",
     "prettier",
     "eslint"
   ],
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
+    "history": "^5.0.1",
+    "lodash": "^4.17.21",
+    "query-string": "^7.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.0.0-beta.8",
     "styled-components": "^5.3.3",
     "webpack": "^5.11.1"
   },
@@ -45,8 +49,10 @@
     "@testing-library/user-event": "^12.6.0",
     "@types/html-webpack-plugin": "^3.2.4",
     "@types/jest": "^26.0.20",
+    "@types/lodash": "^4.14.176",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.20",
     "@types/styled-components": "^5.1.15",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",

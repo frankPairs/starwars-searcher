@@ -1,24 +1,27 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import { Provider } from 'react-redux';
 
-import { AppStyles } from './App.styles';
-import { GlobalStyles, theme } from './styles';
-import logoUrl from './assets/images/logo-star-wars.png';
+import { appStore } from './store';
+import { theme } from './styles';
+import { Layout } from './components/layout';
+import { RedirectToHome } from './components/navigation';
+import { CharactersRouter } from './apps/characters';
 
-function App() {
-  return (
+const App = () => (
+  <BrowserRouter>
     <ThemeProvider theme={theme}>
-      <AppStyles>
-        <GlobalStyles />
-        <header>
-          <img className="logo" src={logoUrl} alt="Star wars logo" />
-        </header>
-        <main>
-          <p>Hello!</p>
-        </main>
-      </AppStyles>
+      <Provider store={appStore}>
+        <Routes>
+          <Route path="/*" element={<Layout />}>
+            <Route path="characters/*" element={<CharactersRouter />} />
+
+            <Route path="*" element={<RedirectToHome homePath="/characters" />} />
+          </Route>
+        </Routes>
+      </Provider>
     </ThemeProvider>
-  );
-}
+  </BrowserRouter>
+);
 
 export { App };

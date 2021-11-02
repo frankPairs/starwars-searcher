@@ -2,6 +2,11 @@ const theme = {
   colors: {
     primary: '#ffc11c',
     secondary: '#000',
+    gray1: '#EEE',
+    gray2: '#DEDEDE',
+    gray3: '#9da0a7',
+    gray4: '#3d4451',
+    black: '#000',
   },
   spacing: {
     xxs: '1rem',
@@ -22,7 +27,7 @@ const theme = {
     xxl: '3.25rem',
   },
   media: {
-    desktop: '992px',
+    smallDesktop: '1200px',
     tablet: '768px',
     mobile: '576px',
   },

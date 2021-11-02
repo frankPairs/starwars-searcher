@@ -1,8 +1,11 @@
-# React Typescript Boilerplate
+# StarWars Searcher
 
-Simple boilerplate to build projects with React, Typescript and CSS modules.
+With this application you can search any StarWars character and see some information about them.
 
-## Commands
+
+## Scripts
+
+```
 
 Run development environment:
 
@@ -10,18 +13,18 @@ Run development environment:
 npm run dev
 ```
 
-Run tests:
-
-```
-npm run test
-```
-
-Build production environment:
+Run production environment:
 
 ```
 npm run start
 ```
 
+Run test environment:
+
+```
+npm run test
+```
+
 ## Authors
 
-* [Frank Parejo](https://github.com/frankPairs)
+- [Frank Parejo](https://github.com/frankPairs)

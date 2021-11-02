@@ -3,7 +3,7 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   output: {
-    publicPath: process.env.PUBLIC_PATH,
+    publicPath: './public',
     filename: '[name].[contenthash].js',
   },
   optimization: {
@@ -35,7 +35,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new webpack.DefinePlugin(),
-  ],
+  plugins: [],
 };

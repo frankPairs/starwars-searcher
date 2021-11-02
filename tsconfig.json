@@ -13,7 +13,7 @@
     "sourceMap": true,
     "strict": true,
     "lib": ["dom", "esnext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "include": [
     "src/**/*"
