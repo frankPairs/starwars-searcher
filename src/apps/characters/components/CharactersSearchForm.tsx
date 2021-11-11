@@ -4,29 +4,24 @@ import debounce from 'lodash/debounce';
 import { SearchField } from '../../../components/inputs';
 import { Wrapper } from './CharactersSearchForm.styles';
 import { useCharacterSearchQuery } from '../hooks';
-import { FetchStatus } from '../../../typedefs/enums';
 
-// Debounce delay in miliseconds
-const DEBOUNCE_DELAY = 500;
+// Debounce delay in milliseconds
+const DEBOUNCE_DELAY = 750;
 
 const CharactersSearchForm = () => {
   const [search, setSearch] = useState('');
+  const [_, { fetchCharactersRequest, setSearchFilter }] = useCharacterSearchQuery();
+  const debouncedRequest = useMemo(() => debounce(fetchCharacters, DEBOUNCE_DELAY), []);
 
-  const [{ status }, { fetchCharactersRequest, setSearchFilter }] = useCharacterSearchQuery();
-  const debouncedRequest = useMemo(
-    () =>
-      debounce((value: string) => {
-        setSearchFilter(value);
-        fetchCharactersRequest();
-      }, DEBOUNCE_DELAY),
-    [],
-  );
+  function fetchCharacters(searchTerm: string) {
+    setSearchFilter(searchTerm);
+    fetchCharactersRequest();
+  }
 
   function handleSearchChange(evt: ChangeEvent<HTMLInputElement>) {
     const value = evt.target.value;
 
     setSearch(value);
-
     debouncedRequest(value);
   }
 
@@ -36,7 +31,6 @@ const CharactersSearchForm = () => {
         id="search-characters"
         placeholder="Search a character"
         value={search}
-        disabled={status === FetchStatus.LOADING}
         onChange={handleSearchChange}
       />
     </Wrapper>
