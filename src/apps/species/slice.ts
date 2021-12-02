@@ -40,7 +40,6 @@ const { reducer: speciesReducer } = createSlice({
       })
       .addCase(fetchCharacterSpecies.rejected, (state, action) => {
         state.status = FetchStatus.ERROR;
-        state.data = {};
         state.error = action.error.message || null;
       });
   },

@@ -27,7 +27,6 @@ const { reducer: planetReducer } = createSlice({
       })
       .addCase(fetchOnePlanet.rejected, (state, action) => {
         state.status = FetchStatus.ERROR;
-        state.data = {};
         state.error = action.error.message || null;
       });
   },

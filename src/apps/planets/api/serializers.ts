@@ -1,9 +1,10 @@
 import { Planet, PlanetAPI } from '../types';
 
-function planetDeserializer({ name, url }: PlanetAPI): Planet {
+function planetDeserializer({ name, url, population }: PlanetAPI): Planet {
   return {
     name,
     url,
+    population,
   };
 }
 

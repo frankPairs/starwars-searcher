@@ -12,6 +12,7 @@ const CharacterList = () => {
   switch (status) {
     case FetchStatus.LOADING:
     case FetchStatus.SUCCESS:
+    case FetchStatus.ERROR:
       if (characters.length === 0 && status === FetchStatus.LOADING) {
         return (
           <ProgressWrapper>
@@ -34,12 +35,6 @@ const CharacterList = () => {
             <CharacterCard key={character.url} character={character} />
           ))}
         </Wrapper>
-      );
-    case FetchStatus.ERROR:
-      return (
-        <ErrorWrapper>
-          <p>There are no characters with that name.</p>
-        </ErrorWrapper>
       );
     default:
       return null;

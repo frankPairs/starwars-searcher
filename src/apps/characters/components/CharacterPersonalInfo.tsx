@@ -26,7 +26,7 @@ const CharacterPersonalInfo = ({ character }: Props) => {
         <h2 className="title">{character.name}</h2>
 
         <div className="header">
-          {characterPlanet && <span className="subtitle">{characterPlanet.name} </span>}
+          {characterPlanet && <span className="subtitle">{characterPlanet.name}</span>}
           {characterSpecies.length > 0 && (
             <span className="subtitle">
               - {characterSpecies.map((species) => species.name).join('/ ')}
@@ -51,6 +51,12 @@ const CharacterPersonalInfo = ({ character }: Props) => {
             <b className="property">Skin Color</b>
             <span className="value">{character.skinColor}</span>
           </li>
+          {characterPlanet && (
+            <li className="row">
+              <b className="property">Planet Population</b>
+              <span className="value">{characterPlanet.population}</span>
+            </li>
+          )}
         </CharacteristicsWrapper>
       </PersonalInfoWrapper>
     </Wrapper>

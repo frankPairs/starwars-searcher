@@ -9,6 +9,7 @@ interface PlanetsState {
 interface Planet {
   name: string;
   url: string;
+  population: string;
 }
 
 interface PlanetAPI {
