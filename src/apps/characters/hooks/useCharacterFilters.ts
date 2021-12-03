@@ -8,24 +8,12 @@ interface State {
 }
 
 interface Actions {
-  syncCharacterFiltersWithSearchParams: (searchParams: URLSearchParams) => void;
   updateCharacterFilters: (newFilters: Partial<CharacterFilters>) => void;
 }
 
 function useCharacterFilters(): [State, Actions] {
   const [_, setSearchParams] = useSearchParams();
   const [characterFilters, setCharacterFilters] = useRecoilState(characterFiltersState);
-
-  function syncCharacterFiltersWithSearchParams(searchParams: URLSearchParams) {
-    const params: CharacterFilters = { search: '' };
-
-    searchParams.forEach((value, key) => {
-      // @ts-ignore
-      params[key] = value;
-    });
-
-    setCharacterFilters(params);
-  }
 
   function updateCharacterFilters(newFilters: Partial<CharacterFilters>) {
     setCharacterFilters((prevState) => {
@@ -37,7 +25,7 @@ function useCharacterFilters(): [State, Actions] {
     });
   }
 
-  return [{ characterFilters }, { syncCharacterFiltersWithSearchParams, updateCharacterFilters }];
+  return [{ characterFilters }, { updateCharacterFilters }];
 }
 
 export { useCharacterFilters };
