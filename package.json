@@ -30,7 +30,6 @@
     "eslint"
   ],
   "dependencies": {
-    "@reduxjs/toolkit": "^1.6.2",
     "history": "^5.0.1",
     "lodash": "^4.17.21",
     "query-string": "^7.0.1",
