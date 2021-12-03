@@ -1,27 +1,23 @@
 import React from 'react';
 
-import { FetchStatus } from '../../../typedefs/enums';
 import { Progress } from '../../../components/feedback';
 import { useCharactersQuery } from '../hooks';
 import { CharacterCard } from './CharacterCard';
 import { Wrapper, ProgressWrapper, ErrorWrapper } from './CharacterList.styles';
+import { Character } from '../types';
 
 const CharacterList = () => {
-  const { characters, status } = useCharactersQuery();
+  const [{ characters, status }] = useCharactersQuery();
 
   switch (status) {
-    case FetchStatus.LOADING:
-    case FetchStatus.SUCCESS:
-    case FetchStatus.ERROR:
-      if (characters.length === 0 && status === FetchStatus.LOADING) {
-        return (
-          <ProgressWrapper>
-            <Progress />
-          </ProgressWrapper>
-        );
-      }
-
-      if (characters.length === 0 && status === FetchStatus.SUCCESS) {
+    case 'loading':
+      return (
+        <ProgressWrapper>
+          <Progress />
+        </ProgressWrapper>
+      );
+    case 'success':
+      if (characters.length === 0) {
         return (
           <ErrorWrapper>
             <p>There are no characters with that name.</p>
@@ -31,7 +27,7 @@ const CharacterList = () => {
 
       return (
         <Wrapper>
-          {characters.map((character) => (
+          {characters.map((character: Character) => (
             <CharacterCard key={character.url} character={character} />
           ))}
         </Wrapper>

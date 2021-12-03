@@ -1,33 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { QueryStatus, useQuery } from 'react-query';
 
-import { RootState } from '../../../store';
 import { Character } from '../../characters/types';
-import { selectFilmsByCharacter } from '../selectors';
-import { fetchCharacterFilms } from '../asyncThunks';
+import { getOneFilm } from '../api';
 import { Film } from '../types';
 
 interface State {
   characterFilms: Film[];
+  status: QueryStatus;
+  error: unknown;
 }
 
 function useCharacterFilmsQuery(character: Character): State {
-  const dispatch = useDispatch();
-  const filmsSaved = useSelector((state: RootState) =>
-    selectFilmsByCharacter(state, character.url),
+  const {
+    data = [],
+    status,
+    error,
+  } = useQuery(
+    ['films', character.url],
+    () => Promise.all(character.films.map((filmUrl) => getOneFilm(filmUrl))),
+    { staleTime: Infinity },
   );
 
-  useEffect(() => {
-    const filmsToFetch = character.films.filter(
-      (filmUrl) => !filmsSaved.map((film) => film.url).includes(filmUrl),
-    );
-
-    if (filmsToFetch.length > 0) {
-      dispatch(fetchCharacterFilms(filmsToFetch));
-    }
-  }, []);
-
-  return { characterFilms: filmsSaved };
+  return { characterFilms: data, status, error };
 }
 
 export { useCharacterFilmsQuery };

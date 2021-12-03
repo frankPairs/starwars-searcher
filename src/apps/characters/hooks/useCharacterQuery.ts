@@ -1,29 +1,22 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { QueryStatus, useQuery } from 'react-query';
 
-import { FetchStatus } from '../../../typedefs/enums';
-import { RootState } from '../../../store';
-import { fetchOneCharacter } from '../asyncThunks';
-import { selectCharacterById, selectError, selectStatus } from '../selectors';
 import { Character } from '../types';
+import { getOneCharacter } from '../api';
 
 interface State {
   character: Character | null;
-  status: FetchStatus;
-  error: string | null;
+  status: QueryStatus;
+  error: unknown;
 }
 
 function useCharacterQuery(characterId: string): State {
-  const dispatch = useDispatch();
-  const character = useSelector((state: RootState) => selectCharacterById(state, characterId));
-  const status = useSelector(selectStatus);
-  const error = useSelector(selectError);
-
-  useEffect(() => {
-    if (!character) {
-      dispatch(fetchOneCharacter(characterId));
-    }
-  }, []);
+  const {
+    data: character = null,
+    status,
+    error,
+  } = useQuery(['characters', characterId], () => getOneCharacter(characterId), {
+    staleTime: Infinity,
+  });
 
   return { character, status, error };
 }

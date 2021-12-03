@@ -1,33 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { QueryStatus, useQuery } from 'react-query';
 
-import { RootState } from '../../../store';
 import { Character } from '../../characters/types';
-import { selectSpeciesByCharacter } from '../selectors';
-import { fetchCharacterSpecies } from '../asyncThunks';
 import { Species } from '../types';
+import { getOneSpecies } from '../api';
 
 interface State {
   characterSpecies: Species[];
+  status: QueryStatus;
+  error: unknown;
 }
 
 function useCharacterSpeciesQuery(character: Character): State {
-  const dispatch = useDispatch();
-  const speciesSaved = useSelector((state: RootState) =>
-    selectSpeciesByCharacter(state, character.url),
+  const {
+    data = [],
+    status,
+    error,
+  } = useQuery(
+    ['species', character.url],
+    () => Promise.all(character.species.map((speciesUrl) => getOneSpecies(speciesUrl))),
+    { staleTime: Infinity },
   );
 
-  useEffect(() => {
-    const speciesToFetch = character.species.filter(
-      (speciesUrl) => !speciesSaved.map((species) => species.url).includes(speciesUrl),
-    );
-
-    if (speciesToFetch.length > 0) {
-      dispatch(fetchCharacterSpecies(character.species));
-    }
-  }, []);
-
-  return { characterSpecies: speciesSaved };
+  return { characterSpecies: data, status, error };
 }
 
 export { useCharacterSpeciesQuery };

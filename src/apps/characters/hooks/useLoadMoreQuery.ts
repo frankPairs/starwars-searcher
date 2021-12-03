@@ -1,33 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import throttle from 'lodash/throttle';
 
-import { FetchStatus } from '../../../typedefs/enums';
-import { selectHasMoreCharacters, selectStatus } from '../selectors';
-import { fetchCharacters } from '../asyncThunks';
+import { useCharactersQuery } from './useCharactersQuery';
 
 interface State {
   hasMoreCharacters: boolean;
-  status: FetchStatus;
+  isFetching: boolean;
 }
 
 interface Actions {
-  loadMoreCharacters: () => void;
+  fetchMoreCharacters: () => void;
 }
 
 const SCROLLY_OFFSET = 250;
 const THROTTLE_TIME = 300;
 
 function useLoadMoreQuery(): [State, Actions] {
-  const dispatch = useDispatch();
-  const status = useSelector(selectStatus);
-  const hasMoreCharacters = useSelector(selectHasMoreCharacters);
+  const [{ hasMoreCharacters, isFetching }, { loadMoreCharacters }] = useCharactersQuery();
   /**
    * It triggers a load more action when scroll vertical position is close the the bottom of the
    * page. SCROLLY_OFFSET is necessary because we want to trigger the event 200 pixels before
    * the scroll vertical position is on the bottom.
    */
-  const loadMoreCharacters = useMemo(() => {
+  const fetchMoreCharacters = useMemo(() => {
     return throttle(() => {
       // This check is necessary to avoid useless calls when user navigates between pages
       if (window.pageYOffset === 0) {
@@ -37,13 +32,13 @@ function useLoadMoreQuery(): [State, Actions] {
       const bodyHeight = document.body.offsetHeight;
       const scrollYThreshold = window.innerHeight + window.pageYOffset + SCROLLY_OFFSET;
 
-      if (scrollYThreshold >= bodyHeight && status !== FetchStatus.LOADING) {
-        dispatch(fetchCharacters());
+      if (scrollYThreshold >= bodyHeight && !isFetching) {
+        loadMoreCharacters();
       }
     }, THROTTLE_TIME);
-  }, [status]);
+  }, [isFetching]);
 
-  return [{ hasMoreCharacters, status }, { loadMoreCharacters }];
+  return [{ hasMoreCharacters, isFetching }, { fetchMoreCharacters }];
 }
 
 export { useLoadMoreQuery };

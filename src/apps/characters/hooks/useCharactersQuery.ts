@@ -1,24 +1,43 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { QueryStatus, useInfiniteQuery } from 'react-query';
 
-import { fetchCharacters } from '../asyncThunks';
-import { selectCharactersAsList, selectError, selectStatus } from '../selectors';
+import { getCharacters } from '../api';
+import { Character } from '../types';
+import { useRecoilValue } from 'recoil';
+import { selectCharactersFilter } from '../selectors';
 
-function useCharactersQuery() {
-  const dispatch = useDispatch();
-  const characters = useSelector(selectCharactersAsList);
-  const status = useSelector(selectStatus);
-  const error = useSelector(selectError);
+interface State {
+  characters: Character[];
+  status: QueryStatus;
+  hasMoreCharacters: boolean;
+  error: unknown;
+  isFetching: boolean;
+}
 
-  useEffect(() => {
-    // It is 1 and not 0 because it can trigger a fetch characters after coming from the detail
-    // page the first time
-    if (characters.length <= 1) {
-      dispatch(fetchCharacters());
-    }
-  }, []);
+interface Actions {
+  loadMoreCharacters: () => void;
+}
 
-  return { characters, status, error };
+function useCharactersQuery(): [State, Actions] {
+  const filters = useRecoilValue(selectCharactersFilter);
+  const { status, error, data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
+    ['characters', filters],
+    ({ pageParam }) => getCharacters(filters, pageParam),
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+      staleTime: Infinity,
+    },
+  );
+
+  return [
+    {
+      characters: data?.pages.flatMap((result) => result.characters) || [],
+      status,
+      hasMoreCharacters: hasNextPage || false,
+      error,
+      isFetching,
+    },
+    { loadMoreCharacters: fetchNextPage },
+  ];
 }
 
 export { useCharactersQuery };

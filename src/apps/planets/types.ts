@@ -1,11 +1,3 @@
-import { FetchStatus } from '../../typedefs/enums';
-
-interface PlanetsState {
-  data: { [planetUrl: string]: Planet };
-  status: FetchStatus;
-  error: string | null;
-}
-
 interface Planet {
   name: string;
   url: string;
@@ -29,4 +21,4 @@ interface PlanetAPI {
   edited: string;
 }
 
-export { PlanetsState, Planet, PlanetAPI };
+export { Planet, PlanetAPI };

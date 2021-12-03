@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Character } from '../types';
-import { Wrapper, Header, Film } from './CharacterFilms.styles';
-import { useCharacterFilmsQuery } from '../../films';
+import { Wrapper, Header, FilmWrapper } from './CharacterFilms.styles';
+import { Film } from '../../films';
 
 interface Props {
-  character: Character;
+  characterFilms: Film[];
 }
 
-const CharacterFilms = ({ character }: Props) => {
-  const { characterFilms } = useCharacterFilmsQuery(character);
-
+const CharacterFilms = ({ characterFilms }: Props) => {
   return (
     <Wrapper>
       <Header>
@@ -19,12 +16,12 @@ const CharacterFilms = ({ character }: Props) => {
 
       <ul>
         {characterFilms.map((film) => (
-          <Film key={film.url}>
+          <FilmWrapper key={film.url}>
             <p className="title">
               {film.title} ({new Date(film.releaseDate).toLocaleDateString()})
             </p>
             <p className="opening">{film.openingCrawl.slice(0, 150)}...</p>
-          </Film>
+          </FilmWrapper>
         ))}
       </ul>
     </Wrapper>

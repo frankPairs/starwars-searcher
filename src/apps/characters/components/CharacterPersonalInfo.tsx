@@ -7,17 +7,16 @@ import {
   PersonalInfoWrapper,
   Wrapper,
 } from './CharacterPersonalInfo.styles';
-import { useCharacterSpeciesQuery } from '../../species';
-import { useCharacterPlanetQuery } from '../../planets';
+import { Species } from '../../species/types';
+import { Planet } from '../../planets/types';
 
 interface Props {
   character: Character;
+  characterSpecies: Species[];
+  characterPlanet: Planet | null;
 }
 
-const CharacterPersonalInfo = ({ character }: Props) => {
-  const { characterSpecies } = useCharacterSpeciesQuery(character);
-  const { characterPlanet } = useCharacterPlanetQuery(character.homeWorld);
-
+const CharacterPersonalInfo = ({ character, characterSpecies, characterPlanet }: Props) => {
   return (
     <Wrapper>
       <img src={getImageByCharacterName(character.name)} alt={character.name} />

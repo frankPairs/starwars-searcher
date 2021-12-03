@@ -1,26 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-
-import { RootState } from '../../../store';
-import { selectPlanetByUrl } from '../selectors';
-import { fetchOnePlanet } from '../asyncThunks';
 import { Planet } from '../types';
+import { Character } from '../../characters/types';
+import { QueryStatus, useQuery } from 'react-query';
+import { getOnePlanet } from '../api';
 
 interface State {
   characterPlanet: Planet | null;
+  status: QueryStatus;
+  error: unknown;
 }
 
-function useCharacterPlanetQuery(planetUrl: string): State {
-  const dispatch = useDispatch();
-  const planetSaved = useSelector((state: RootState) => selectPlanetByUrl(state, planetUrl));
+function useCharacterPlanetQuery(character: Character): State {
+  const {
+    data = null,
+    status,
+    error,
+  } = useQuery(['planets', character.homeWorld], () => getOnePlanet(character.homeWorld), {
+    staleTime: Infinity,
+  });
 
-  useEffect(() => {
-    if (!planetSaved || planetSaved.url !== planetUrl) {
-      dispatch(fetchOnePlanet(planetUrl));
-    }
-  }, []);
-
-  return { characterPlanet: planetSaved };
+  return { characterPlanet: data, status, error };
 }
 
 export { useCharacterPlanetQuery };

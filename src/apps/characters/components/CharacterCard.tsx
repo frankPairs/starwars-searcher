@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { getImageByCharacterName } from '../../../utils/images';
-import { RootState } from '../../../store';
 import { Character } from '../types';
-import { selectCharacterIdFromUrl } from '../selectors';
 import { Wrapper, Overlap, Image, MoreInfo } from './CharacterCard.styles';
+import { getCharacterIdFromUrl } from '../utils';
 
 interface Props {
   character: Character;
@@ -14,9 +12,7 @@ interface Props {
 
 const CharacterCard = ({ character }: Props) => {
   const navigate = useNavigate();
-  const characterId = useSelector((state: RootState) =>
-    selectCharacterIdFromUrl(state, character.url),
-  );
+  const characterId = getCharacterIdFromUrl(character.url);
 
   function navigateToCharacterDetailView() {
     navigate(`/characters/${characterId}`);

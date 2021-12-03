@@ -14,7 +14,7 @@ const Header = styled.div`
   }
 `;
 
-const Film = styled.li`
+const FilmWrapper = styled.li`
   margin-bottom: ${(props) => props.theme.spacing.md};
 
   .title {
@@ -30,4 +30,4 @@ const Film = styled.li`
   }
 `;
 
-export { Wrapper, Header, Film };
+export { Wrapper, Header, FilmWrapper };

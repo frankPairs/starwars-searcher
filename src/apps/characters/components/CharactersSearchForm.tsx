@@ -1,21 +1,26 @@
-import React, { ChangeEvent, useState, useMemo } from 'react';
+import React, { ChangeEvent, useState, useMemo, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 
 import { SearchField } from '../../../components/inputs';
 import { Wrapper } from './CharactersSearchForm.styles';
-import { useCharacterSearchQuery } from '../hooks';
+import { useCharacterFilters } from '../hooks/useCharacterFilters';
 
 // Debounce delay in milliseconds
 const DEBOUNCE_DELAY = 750;
 
 const CharactersSearchForm = () => {
+  const [{ characterFilters }, { updateCharacterFilters }] = useCharacterFilters();
   const [search, setSearch] = useState('');
-  const [_, { fetchCharactersRequest, setSearchFilter }] = useCharacterSearchQuery();
   const debouncedRequest = useMemo(() => debounce(fetchCharacters, DEBOUNCE_DELAY), []);
 
+  useEffect(() => {
+    if (!search) {
+      setSearch(characterFilters.search);
+    }
+  }, [characterFilters]);
+
   function fetchCharacters(searchTerm: string) {
-    setSearchFilter(searchTerm);
-    fetchCharactersRequest();
+    updateCharacterFilters({ search: searchTerm });
   }
 
   function handleSearchChange(evt: ChangeEvent<HTMLInputElement>) {

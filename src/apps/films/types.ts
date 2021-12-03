@@ -1,12 +1,3 @@
-import { FetchStatus } from '../../typedefs/enums';
-
-interface FilmState {
-  data: { [filmUrl: string]: Film };
-  byCharacter: { [characterUrl: string]: string[] };
-  status: FetchStatus;
-  error: string | null;
-}
-
 interface Film {
   title: string;
   url: string;
@@ -32,4 +23,4 @@ interface FilmAPI {
   edited: string;
 }
 
-export { FilmState, Film, FilmAPI };
+export { Film, FilmAPI };

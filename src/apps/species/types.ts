@@ -1,12 +1,3 @@
-import { FetchStatus } from '../../typedefs/enums';
-
-interface SpeciesState {
-  data: { [speciesUrl: string]: Species };
-  byCharacter: { [characterUrl: string]: string[] };
-  status: FetchStatus;
-  error: string | null;
-}
-
 interface Species {
   name: string;
   url: string;
@@ -31,4 +22,4 @@ interface SpeciesAPI {
   edited: string;
 }
 
-export { SpeciesState, Species, SpeciesAPI };
+export { Species, SpeciesAPI };

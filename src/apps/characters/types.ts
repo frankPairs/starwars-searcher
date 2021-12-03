@@ -28,11 +28,6 @@ interface CharacterFilters {
   search: string;
 }
 
-interface SetFilterPayloadAction {
-  filterName: FilterName;
-  filterValue: string;
-}
-
 interface GetCharactersDeserializer {
   // Link to the next page. When value equals to null it means there are not more pages to show.
   nextPage: string | null;
@@ -79,5 +74,4 @@ export {
   CharacterAPI,
   GetCharactersResponseBody,
   GetCharactersDeserializer,
-  SetFilterPayloadAction,
 };
