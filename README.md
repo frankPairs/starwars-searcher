@@ -16,7 +16,7 @@ npm run dev
 Run production environment:
 
 ```
-npm run start
+npm run build
 ```
 
 ## Author
