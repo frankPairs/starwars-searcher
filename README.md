@@ -19,13 +19,6 @@ Run production environment:
 npm run start
 ```
 
-Run test environment:
-
-```
-npm run test
-```
-
-## Authors
-
+## Author
 
 [Frank Parejo](https://github.com/frankPairs)

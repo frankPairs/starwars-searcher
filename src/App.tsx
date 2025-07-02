@@ -1,31 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { ThemeProvider } from 'styled-components';
-import { QueryClientProvider, QueryClient } from 'react-query';
-import { RecoilRoot } from 'recoil';
 
+import { charactersRoute } from './features/characters';
+import { rootRoute } from './routes';
 import { theme } from './styles';
-import { Layout } from './components/layout';
-import { RedirectToHome } from './components/navigation';
-import { CharactersRouter } from './apps/characters';
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route path="/*" element={<Layout />}>
-              <Route path="characters/*" element={<CharactersRouter />} />
+const routeTree = rootRoute.addChildren([charactersRoute]);
+const router = createRouter({ routeTree });
 
-              <Route path="*" element={<RedirectToHome homePath="/characters" />} />
-            </Route>
-          </Routes>
-        </QueryClientProvider>
-      </RecoilRoot>
-    </ThemeProvider>
-  </BrowserRouter>
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export { App };

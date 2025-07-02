@@ -1,1 +1,0 @@
-export { CharactersRouter } from './components';

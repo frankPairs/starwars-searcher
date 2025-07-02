@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
-interface Props {
-  homePath: string;
-}
-
-const RedirectToHome = ({ homePath }: Props) => {
+const RedirectToHome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(homePath);
+    navigate({
+      to: '/characters',
+    });
   }, []);
 
   return null;

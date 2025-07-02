@@ -1,4 +1,4 @@
-const BASE_URL = 'https://swapi.dev/api';
+const BASE_URL = 'https://swapi.info/api';
 
 class InternalServerError extends Error {
   constructor() {

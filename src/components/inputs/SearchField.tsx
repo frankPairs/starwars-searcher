@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 
-import { Wrapper, Input } from './SearchField.styles';
+import { Input, Wrapper } from './SearchField.styles';
 
 interface Props {
   value: string;

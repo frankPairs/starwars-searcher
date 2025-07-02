@@ -7,7 +7,7 @@ const dash = keyframes`
   }
   100% {
     stroke-dashoffset: -${offset};
-  }  
+  }
 `;
 
 const Wrapper = styled.svg`

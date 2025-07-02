@@ -6,8 +6,7 @@ import characterImages from '../assets/json/characterImages.json';
  * @param name {string}: Character's name
  */
 function getImageByCharacterName(name: string): string {
-  // TODO: add fallback image
-  return characterImages[name] || '';
+  return characterImages[name as keyof typeof characterImages] || '';
 }
 
 export { getImageByCharacterName };
