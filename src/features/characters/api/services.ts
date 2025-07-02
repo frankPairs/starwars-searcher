@@ -1,4 +1,7 @@
 import { BASE_URL, InternalServerError } from '../../../utils/api';
+import { getOneFilm, type Film } from '../../films';
+import { getOnePlanet, type Planet } from '../../planets';
+import { getOneSpecies, type Species } from '../../species';
 import type { Character, CharacterAPI } from '../types';
 import { characterDeserializer, charactersDeserializer } from './serializers';
 
@@ -51,4 +54,22 @@ async function getOneCharacter(characterId: string): Promise<Character> {
   }
 }
 
-export { getCharacters, getOneCharacter };
+async function getCharacterFilms(character: Character): Promise<Film[]> {
+  return Promise.all(character.films.map((filmUrl) => getOneFilm(filmUrl)));
+}
+
+async function getCharacterPlanet(character: Character): Promise<Planet> {
+  return getOnePlanet(character.homeWorld);
+}
+
+async function getCharacterSpecies(character: Character): Promise<Species[]> {
+  return Promise.all(character.species.map((speciesUrl) => getOneSpecies(speciesUrl)));
+}
+
+export {
+  getCharacterFilms,
+  getCharacterPlanet,
+  getCharacters,
+  getCharacterSpecies,
+  getOneCharacter,
+};
